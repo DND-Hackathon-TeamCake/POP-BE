@@ -4,8 +4,10 @@ import com.cake.pop.domain.letter.dto.request.CreateLetterRequest;
 import com.cake.pop.domain.letter.dto.request.CreateStorageRequest;
 import com.cake.pop.domain.letter.dto.response.GetLetterResponse;
 import com.cake.pop.domain.letter.dto.response.GetLettersResponse;
+import com.cake.pop.domain.letter.dto.response.SimpleLetterDto;
 import com.cake.pop.domain.letter.service.LetterService;
 import jakarta.validation.Valid;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,11 +44,17 @@ public class LetterController {
     }
 
     @PostMapping("/storage")
-    public ResponseEntity<Void> createStorage(@RequestBody @Valid CreateStorageRequest request){
+    public ResponseEntity<Void> createStorage(@RequestBody @Valid CreateStorageRequest request) {
         Long userId = 1L;
         letterService.createStorage(userId, request);
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/storages")
+    public ResponseEntity<List<SimpleLetterDto>> getStorages() {
+        Long userId = 1L;
+        List<SimpleLetterDto> response = letterService.getStorages(userId);
+        return ResponseEntity.ok(response);
+    }
 
 }

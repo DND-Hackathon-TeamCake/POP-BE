@@ -70,4 +70,20 @@ public class LetterService {
 
         storageRepository.save(storage);
     }
+
+    public List<SimpleLetterDto> getStorages(Long userId){
+        User findUser = userRepository.getById(userId);
+        List<Storage> storages = storageRepository.findByUser(findUser);
+
+        return storages.stream()
+                .map(storage -> {
+                    Letter letter = storage.getLetter();
+                    return new SimpleLetterDto(
+                            letter.getId(),
+                            letter.getContent(),
+                            letter.getCreatedAt().toLocalDate() // LocalDateTime → LocalDate
+                    );
+                })
+                .toList();
+    }
 }
