@@ -1,4 +1,9 @@
 package com.cake.pop.domain.letter.dto.response;
 
-public record GetLettersResponse() {
+import java.util.List;
+
+public record GetLettersResponse(
+    String region,
+    List<SimpleLetterDto> letters
+) {
 }
