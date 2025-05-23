@@ -14,10 +14,13 @@ import com.cake.pop.entity.Mailbox;
 import com.cake.pop.entity.Storage;
 import com.cake.pop.entity.User;
 import com.cake.pop.entity.enums.Region;
+import com.cake.pop.entity.enums.Status;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+@Transactional(readOnly = true)
 @Service
 @RequiredArgsConstructor
 public class LetterService {
@@ -27,19 +30,19 @@ public class LetterService {
     private final StorageRepository storageRepository;
     private final UserRepository userRepository;
 
+    @Transactional
     public void createLetter(CreateLetterRequest request) {
         Mailbox findMailbox = mailboxRepository.getFirstByRegion(request.region());
         findMailbox.increaseLetterCount();
 
         Letter letter = Letter.of(request.content(), findMailbox, request.imageUrl());
         letterRepository.save(letter);
-        mailboxRepository.save(findMailbox);
     }
 
     public GetLettersResponse getLetters(String region){
         Mailbox findMailbox = mailboxRepository.getFirstByRegion(Region.fromKoreanName(region));
 
-        List<Letter> letters = letterRepository.findByMailbox(findMailbox);
+        List<Letter> letters = letterRepository.findByMailboxAndStatus(findMailbox, Status.ACTIVE);
 
         List<SimpleLetterDto> letterDtos = letters.stream()
                 .map(letter -> new SimpleLetterDto(
@@ -63,6 +66,7 @@ public class LetterService {
         );
     }
 
+    @Transactional
     public void createStorage(Long userId, CreateStorageRequest request){
         User findUser = userRepository.getById(userId);
         Letter findLetter = letterRepository.getById(request.letterId());
@@ -85,5 +89,11 @@ public class LetterService {
                     );
                 })
                 .toList();
+    }
+
+    @Transactional
+    public void reportLetter(Long letterId){
+        Letter findLetter = letterRepository.getById(letterId);
+        findLetter.report();
     }
 }

@@ -16,15 +16,21 @@ public interface LetterRepository extends JpaRepository<Letter, Long> {
 
     List<Letter> findByMailbox(Mailbox mailbox);
 
-    @Query("SELECT l FROM Letter l JOIN FETCH l.mailbox WHERE l.id = :id")
-    Optional<Letter> findByIdWithMailbox(@Param("id") Long id);
+    List<Letter> findByMailboxAndStatus(Mailbox mailbox, com.cake.pop.entity.enums.Status status);
+
+    @Query("SELECT l FROM Letter l WHERE l.id = :id AND l.status = 'ACTIVE'")
+    Optional<Letter> findActiveById(@Param("id") Long id);
+
+    @Query("SELECT l FROM Letter l JOIN FETCH l.mailbox WHERE l.id = :id AND l.status = 'ACTIVE'")
+    Optional<Letter> findActiveByIdWithMailbox(@Param("id") Long id);
 
     default Letter getById(Long id) {
-        return findById(id).orElseThrow(() -> new RestApiException(LetterErrorCode.LETTER_NOT_FOUND));
+        return findActiveById(id)
+                .orElseThrow(() -> new RestApiException(LetterErrorCode.LETTER_NOT_FOUND));
     }
 
     default Letter getByIdWithMailbox(Long id) {
-        return findByIdWithMailbox(id)
+        return findActiveByIdWithMailbox(id)
                 .orElseThrow(() -> new RestApiException(LetterErrorCode.LETTER_NOT_FOUND));
     }
 }
