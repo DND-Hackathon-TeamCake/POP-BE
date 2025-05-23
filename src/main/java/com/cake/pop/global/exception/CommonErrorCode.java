@@ -13,7 +13,9 @@ public enum CommonErrorCode implements ErrorCode {
     INVALID_TOKEN(HttpStatus.UNAUTHORIZED, "Invalid token"),
     EXPIRED_TOKEN(HttpStatus.UNAUTHORIZED, "Expired token"),
     NOT_EXIST_BEARER_SUFFIX(HttpStatus.UNAUTHORIZED, "Bearer prefix is missing."),
-    REFRESH_DENIED(HttpStatus.FORBIDDEN, "Refresh denied");
+    REFRESH_DENIED(HttpStatus.FORBIDDEN, "Refresh denied"),
+    REGION_NOT_FOUND(HttpStatus.NOT_FOUND, "구를 찾을 수 없습니다"),
+    ;
 
     private final HttpStatus httpStatus;
     private final String message;
