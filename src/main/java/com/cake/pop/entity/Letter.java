@@ -62,4 +62,11 @@ public class Letter extends TimeBaseEntity {
                 .imageUrl(imageUrl)
                 .build();
     }
+
+    public void report() {
+        this.report++;
+        if (this.report >= 3) {
+            this.status = Status.INACTIVE;
+        }
+    }
 }
