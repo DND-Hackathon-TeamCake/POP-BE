@@ -2,7 +2,7 @@ name: Prod CI/CD
 
 on:
   pull_request:
-    branches: [ "prod", "dev" ]
+    branches: [ "prod", "develop" ]
 
 jobs:
   build:
