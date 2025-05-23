@@ -48,7 +48,9 @@ public class SecurityConfig {
 			.authorizeHttpRequests(
 				(auth) -> auth
 					.requestMatchers("/").permitAll()
-					.requestMatchers("/api/auth/reissue/token").permitAll()
+					.requestMatchers("/api/auth/reissue/token",
+						"/login/oauth2/**",         // ← 이 줄 추가
+						"/oauth2/authorization/**").permitAll()
 			)
 			.oauth2Login((oauth2) -> oauth2
 				.userInfoEndpoint(
