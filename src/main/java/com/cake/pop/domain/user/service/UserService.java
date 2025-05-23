@@ -15,7 +15,7 @@ public class UserService {
     public User saveOrUpdate(Oauth2Response oauth2Response) {
         User user = userRepository.findFirstByEmail(oauth2Response.getEmail())
             .map(u -> {
-                u.updateEmail(oauth2Response.createSocialEmail());
+                u.updateEmail(oauth2Response.getEmail());
                 // deleteRefreshTokenIfExists(m);
                 // deleteOauthAccessTokenIfExists(m);
                 // saveOauth2AccessToken(oauth2Response, m);
