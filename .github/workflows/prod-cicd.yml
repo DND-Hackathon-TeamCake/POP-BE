@@ -48,7 +48,7 @@ jobs:
         run: ./gradlew clean build
 
       - name: Build the Docker image
-        run: docker build . --file Dockerfile --tag ${{ secrets.DOCKER_USERNAME }}/analdoo:latest
+        run: docker build . --file Dockerfile --tag ${{ secrets.DOCKER_USERNAME }}/pop:latest
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v3
@@ -57,7 +57,7 @@ jobs:
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
 
       - name: Push the Docker image
-        run: docker push ${{ secrets.DOCKER_USERNAME }}/analdoo:latest
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/pop:latest
 
   deploy:
     runs-on: ubuntu-latest
@@ -73,7 +73,7 @@ jobs:
           port: 22
           script: |
             docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_HUB_TOKEN }}
-            docker pull ${{ secrets.DOCKER_USERNAME }}/analdoo:latest
-            docker stop analdoo_server || true
-            docker rm analdoo_server || true
-            docker run -d --name analdoo_server -p 8080:8080 ${{ secrets.DOCKER_USERNAME }}/analdoo:latest
+            docker pull ${{ secrets.DOCKER_USERNAME }}/pop:latest
+            docker stop pop_server || true
+            docker rm pop_server || true
+            docker run -d --name pop_server -p 8080:8080 ${{ secrets.DOCKER_USERNAME }}/pop:latest
