@@ -10,6 +10,7 @@ import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -45,15 +46,13 @@ public class LetterController {
     }
 
     @PostMapping("/storage")
-    public ResponseEntity<Void> createStorage(@RequestBody @Valid CreateStorageRequest request) {
-        Long userId = 1L;
+    public ResponseEntity<Void> createStorage(@AuthenticationPrincipal Long userId, @RequestBody @Valid CreateStorageRequest request) {
         letterService.createStorage(userId, request);
         return ResponseEntity.ok().build();
     }
 
     @GetMapping("/storages")
-    public ResponseEntity<List<SimpleLetterDto>> getStorages() {
-        Long userId = 1L;
+    public ResponseEntity<List<SimpleLetterDto>> getStorages(@AuthenticationPrincipal Long userId) {
         List<SimpleLetterDto> response = letterService.getStorages(userId);
         return ResponseEntity.ok(response);
     }
