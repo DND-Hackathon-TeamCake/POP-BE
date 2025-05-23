@@ -23,7 +23,7 @@ public class User extends TimeBaseEntity {
     @Column(name = "user_id")
     private Long id;
 
-    @Column(name = "email", nullable = false, unique = true)
+    @Column(name = "email", nullable = false)
     private String email;
 
     @Builder(access = AccessLevel.PRIVATE)
