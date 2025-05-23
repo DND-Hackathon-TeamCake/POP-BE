@@ -46,6 +46,7 @@ public class LetterService {
         Letter findLetter = letterRepository.getById(letterId);
 
         return new GetLetterResponse(
+                findLetter.getId(),
                 findLetter.getContent(),
                 findLetter.getImageUrl()
         );
