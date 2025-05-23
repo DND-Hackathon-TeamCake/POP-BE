@@ -1,0 +1,51 @@
+package com.cake.pop.global.auth.oauth;
+
+import java.util.Map;
+
+public class KakaoResponse implements Oauth2Response {
+
+	private final Map<String, Object> attribute;
+	private final Long id;
+	private final String oauth2AccessToken;
+
+	public KakaoResponse(Map<String, Object> attribute, String oauth2AccessToken) {
+		this.attribute = (Map<String, Object>)attribute.get("kakao_account");
+		this.id = (Long)attribute.get("id");
+		this.oauth2AccessToken = oauth2AccessToken;
+	}
+
+	@Override
+	public String getProvider() {
+		return Provider.KAKAO.getLabel();
+	}
+
+	@Override
+	public String getProviderId() {
+		return this.id.toString();
+	}
+
+	@Override
+	public String getEmail() {
+		return attribute.get("email").toString();
+	}
+
+	@Override
+	public String getName() {
+		return ((Map<String, Object>)attribute.get("profile")).get("nickname").toString();
+	}
+
+	@Override
+	public String createSocialEmail() {
+		return String.format("%s%s/%s",
+			this.getProvider(),
+			this.getProviderId(),
+			this.getEmail()
+		);
+	}
+
+	@Override
+	public String getOauth2AccessToken() {
+		return this.oauth2AccessToken;
+	}
+
+}
