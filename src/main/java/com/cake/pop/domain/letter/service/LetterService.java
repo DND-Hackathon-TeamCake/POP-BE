@@ -27,10 +27,13 @@ public class LetterService {
     private final StorageRepository storageRepository;
     private final UserRepository userRepository;
 
-    public void create(CreateLetterRequest request) {
+    public void createLetter(CreateLetterRequest request) {
         Mailbox findMailbox = mailboxRepository.getFirstByRegion(request.region());
+        findMailbox.increaseLetterCount();
+
         Letter letter = Letter.of(request.content(), findMailbox, request.imageUrl());
         letterRepository.save(letter);
+        mailboxRepository.save(findMailbox);
     }
 
     public GetLettersResponse getLetters(String region){

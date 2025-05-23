@@ -25,7 +25,7 @@ public class LetterController {
 
     @PostMapping
     public ResponseEntity<Void> createLetter(@RequestBody @Valid CreateLetterRequest request) {
-        letterService.create(request);
+        letterService.createLetter(request);
         return ResponseEntity.ok().build();
     }
 
