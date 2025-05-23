@@ -47,4 +47,6 @@ public class LetterController {
         letterService.createStorage(userId, request);
         return ResponseEntity.ok().build();
     }
+
+
 }

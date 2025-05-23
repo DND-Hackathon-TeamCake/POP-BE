@@ -50,12 +50,13 @@ public class LetterService {
     }
 
     public GetLetterResponse getLetter(Long letterId){
-        Letter findLetter = letterRepository.getById(letterId);
+        Letter findLetter = letterRepository.getByIdWithMailbox(letterId);
 
         return new GetLetterResponse(
                 findLetter.getId(),
                 findLetter.getContent(),
-                findLetter.getImageUrl()
+                findLetter.getImageUrl(),
+                findLetter.getMailbox().getRegion().getName()
         );
     }
 
