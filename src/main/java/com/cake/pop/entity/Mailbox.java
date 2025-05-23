@@ -44,4 +44,8 @@ public class Mailbox {
                 .region(region)
                 .build();
     }
+
+    public void increaseLetterCount() {
+        this.letterCount = this.letterCount + 1;
+    }
 }
