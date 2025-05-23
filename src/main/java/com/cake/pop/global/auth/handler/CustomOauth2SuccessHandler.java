@@ -37,7 +37,7 @@ public class CustomOauth2SuccessHandler implements AuthenticationSuccessHandler 
 		CustomOauth2User customOauth2User = (CustomOauth2User)authentication.getPrincipal();
 
 		String email = customOauth2User.getEmail();
-		User findUser = userRepository.findByEmail(email)
+		User findUser = userRepository.findFirstByEmail(email)
 			.orElseThrow(() -> new RestApiException(UserErrorCode.USER_NOT_FOUND));
 
 		String token = tokenProvider.generateAccessToken(findUser, customOauth2User, new Date());

@@ -13,7 +13,7 @@ public class UserService {
     private final UserRepository userRepository;
 
     public User saveOrUpdate(Oauth2Response oauth2Response) {
-        User user = userRepository.findByEmail(oauth2Response.getEmail())
+        User user = userRepository.findFirstByEmail(oauth2Response.getEmail())
             .map(u -> {
                 u.updateEmail(oauth2Response.createSocialEmail());
                 // deleteRefreshTokenIfExists(m);
