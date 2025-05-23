@@ -15,6 +15,7 @@ public class CookieUtil {
 
 	public Cookie createCookie(String token) {
 		Cookie cookie = new Cookie("Authorization", token);
+		cookie.setDomain(".cake-pop.shop");
 		cookie.setPath("/");
 		cookie.setMaxAge(60 * 180);
 		cookie.setHttpOnly(true);
