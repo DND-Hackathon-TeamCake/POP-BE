@@ -1,5 +1,11 @@
 package com.cake.pop.entity.enums;
 
+import com.cake.pop.global.exception.CommonErrorCode;
+import com.cake.pop.global.exception.RestApiException;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonCreator.Mode;
+import com.fasterxml.jackson.annotation.JsonValue;
+import java.util.Arrays;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -31,6 +37,19 @@ public enum Region {
     JONGNO("종로구"),
     JUNG("중구"),
     JUNGRANG("중랑구");
+
+    @JsonCreator(mode = Mode.DELEGATING)
+    public static Region fromKoreanName(String name) {
+        return Arrays.stream(Region.values())
+                .filter(region -> region.getName().equals(name))
+                .findFirst()
+                .orElseThrow(() -> new RestApiException(CommonErrorCode.REGION_NOT_FOUND));
+    }
+
+    @JsonValue
+    public String toKoreanName() {
+        return name;
+    }
 
     private final String name;
 }
