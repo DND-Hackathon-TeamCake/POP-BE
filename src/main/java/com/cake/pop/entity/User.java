@@ -36,4 +36,8 @@ public class User extends TimeBaseEntity {
                 .email(email)
                 .build();
     }
+
+    public void updateEmail(String email) {
+        this.email = email;
+    }
 }

@@ -1,5 +1,7 @@
 package com.cake.pop.domain.user.repository;
 
+import java.util.Optional;
+
 import com.cake.pop.domain.user.exception.UserErrorCode;
 import com.cake.pop.entity.User;
 import com.cake.pop.global.exception.RestApiException;
@@ -12,4 +14,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     default User getById(Long id){
         return findById(id).orElseThrow(()->new RestApiException(UserErrorCode.USER_NOT_FOUND));
     }
+
+	Optional<User> findByEmail(String email);
 }
