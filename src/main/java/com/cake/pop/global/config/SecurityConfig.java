@@ -47,10 +47,13 @@ public class SecurityConfig {
 		http
 			.authorizeHttpRequests(
 				(auth) -> auth
+					.requestMatchers(
+						"/oauth2/authorization/**",   // 로그인 시작 시
+						"/login/oauth2/**",           // 콜백 시
+						"/error"                      // 에러 페이지
+					).permitAll()
 					.requestMatchers("/").permitAll()
-					.requestMatchers("/api/auth/reissue/token",
-						"/login/oauth2/**",         // ← 이 줄 추가
-						"/oauth2/authorization/**").permitAll()
+					.requestMatchers("/api/auth/reissue/token").permitAll()
 			)
 			.oauth2Login((oauth2) -> oauth2
 				.userInfoEndpoint(
