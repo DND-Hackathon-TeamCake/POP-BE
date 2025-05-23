@@ -1,6 +1,7 @@
 package com.cake.pop.domain.letter.controller;
 
 import com.cake.pop.domain.letter.dto.request.CreateLetterRequest;
+import com.cake.pop.domain.letter.dto.request.CreateStorageRequest;
 import com.cake.pop.domain.letter.dto.response.GetLetterResponse;
 import com.cake.pop.domain.letter.dto.response.GetLettersResponse;
 import com.cake.pop.domain.letter.service.LetterService;
@@ -38,5 +39,12 @@ public class LetterController {
     public ResponseEntity<GetLetterResponse> getLetter(@PathVariable("letterId") Long letterId) {
         GetLetterResponse response = letterService.getLetter(letterId);
         return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/storage")
+    public ResponseEntity<Void> createStorage(@RequestBody @Valid CreateStorageRequest request){
+        Long userId = 1L;
+        letterService.createStorage(userId, request);
+        return ResponseEntity.ok().build();
     }
 }
