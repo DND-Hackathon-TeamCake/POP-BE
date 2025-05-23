@@ -41,7 +41,7 @@ public class CustomOauth2SuccessHandler implements AuthenticationSuccessHandler 
 			.orElseThrow(() -> new RestApiException(UserErrorCode.USER_NOT_FOUND));
 
 		String token = tokenProvider.generateAccessToken(findUser, customOauth2User, new Date());
-		tokenProvider.generateRefreshToken(findUser, customOauth2User, new Date());
+		// tokenProvider.generateRefreshToken(findUser, customOauth2User, new Date());
 
 		response.addCookie(cookieUtil.createCookie(token));
 
