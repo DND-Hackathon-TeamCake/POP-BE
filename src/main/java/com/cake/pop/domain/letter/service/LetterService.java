@@ -1,6 +1,7 @@
 package com.cake.pop.domain.letter.service;
 
 import com.cake.pop.domain.letter.dto.request.CreateLetterRequest;
+import com.cake.pop.domain.letter.dto.response.GetLetterResponse;
 import com.cake.pop.domain.letter.dto.response.GetLettersResponse;
 import com.cake.pop.domain.letter.dto.response.SimpleLetterDto;
 import com.cake.pop.domain.letter.repository.LetterRepository;
@@ -39,5 +40,15 @@ public class LetterService {
                 .toList();
 
         return new GetLettersResponse(region, letterDtos);
+    }
+
+    public GetLetterResponse getLetter(Long letterId){
+        Letter findLetter = letterRepository.getById(letterId);
+
+        return new GetLetterResponse(
+                findLetter.getId(),
+                findLetter.getContent(),
+                findLetter.getImageUrl()
+        );
     }
 }
