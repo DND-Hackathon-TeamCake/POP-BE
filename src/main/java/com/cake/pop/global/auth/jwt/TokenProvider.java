@@ -60,8 +60,8 @@ public class TokenProvider {
 		String refreshToken = generateToken(findUser, authentication, REFRESH_TOKEN_EXPIRE_TIME, now);
 
 		// redis Refresh 저장
-		redisUtil.setValues("RT:" + authentication.getEmail(), refreshToken,
-			Duration.ofMillis(REFRESH_TOKEN_EXPIRE_TIME));
+		// redisUtil.setValues("RT:" + authentication.getEmail(), refreshToken,
+		// 	Duration.ofMillis(REFRESH_TOKEN_EXPIRE_TIME));
 	}
 
 	private String generateToken(User findUser, CustomOauth2User authentication, long tokenExpireTime, Date now) {

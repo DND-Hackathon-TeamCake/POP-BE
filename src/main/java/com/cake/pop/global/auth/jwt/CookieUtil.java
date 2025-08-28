@@ -16,10 +16,11 @@ public class CookieUtil {
 	public Cookie createCookie(String token) {
 		Cookie cookie = new Cookie("Authorization", token);
 		cookie.setPath("/");
+		cookie.setDomain("cake-pop.shop");
 		cookie.setMaxAge(60 * 180);
 		cookie.setHttpOnly(true);
 		cookie.setSecure(true);
-		cookie.setAttribute("SameSite", "None");
+		cookie.setAttribute("SameSite", "Strict");
 		return cookie;
 	}
 
@@ -29,7 +30,7 @@ public class CookieUtil {
 		cookie.setMaxAge(0);
 		cookie.setHttpOnly(true);
 		cookie.setSecure(true);
-		cookie.setAttribute("SameSite", "None");
+		cookie.setAttribute("SameSite", "Strict");
 
 		response.addCookie(cookie);
 	}
